@@ -9,11 +9,17 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+# env = environ.Env()
+envpath = os.path.dirname(os.path.dirname(BASE_DIR)) + '/.env'
+environ.Env.read_env(env_file=envpath)
+print(envpath)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -73,11 +79,11 @@ WSGI_APPLICATION = 'aws_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'NAME': 'fastcampus',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'POST': '5432',
+        'HOST': os.environ['DB_HOST'],
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_HOST'],
+        'PORT': '5432',
     }
 }
 
